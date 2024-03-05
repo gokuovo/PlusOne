@@ -1,11 +1,13 @@
 package config
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
-func server() {
+func server(port int64) {
 	// 创建Gin引擎
 	router := gin.Default()
 
@@ -15,7 +17,7 @@ func server() {
 			"message": "Hello, Gin!",
 		})
 	})
-
+	str := strconv.FormatInt(port, 10)
 	// 启动Gin应用
-	router.Run(":8080")
+	router.Run(fmt.Sprintf(":%s", str))
 }
