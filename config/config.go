@@ -27,6 +27,7 @@ type DatabaseConfig struct {
 	Port     int    `yaml:"port"`
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
+	Dbname   string `yaml:"dbname"`
 	// 添加其他数据库配置字段...
 }
 
@@ -52,6 +53,8 @@ func LoadingYaml() {
 	if err != nil {
 		panic(err)
 	}
+	//连接数据库
+	mysqlCon(config.Database)
 	//启动服务
 	server(config.Server.Port)
 }
