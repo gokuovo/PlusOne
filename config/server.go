@@ -2,14 +2,13 @@ package config
 
 import (
 	"PlusOne/middleware"
-	"PlusOne/models"
+	"PlusOne/route"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"strconv"
 )
 
-func server(port int64) {
+func Server(port int64) {
 	// 创建Gin引擎
 	router := gin.Default()
 
@@ -18,15 +17,11 @@ func server(port int64) {
 
 	// 注册日志中间件
 	router.Use(middleware.LogMiddleware)
-	// 定义路由和处理函数
-	router.GET("/", func(c *gin.Context) {
-		//var a []models.A
-		a := make([]models.A, 0)
-		DB.Find(&a)
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello, Gin!",
-		})
-	})
+
+	//注册路由
+	route.Route(router)
+
+	println(fmt.Sprintf("%c[%d;%d;%dm%s%c[0m", 0x1B, 0, 0, 31, msg, 0x1B))
 
 	// 启动Gin应用
 	router.Run(fmt.Sprintf(":%s", strconv.FormatInt(port, 10)))
